@@ -14,6 +14,7 @@
 		2349FD78261E4F6A00A1FEAA /* CodingChallengeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2349FD77261E4F6A00A1FEAA /* CodingChallengeUITests.swift */; };
 		2349FD89261E4F9900A1FEAA /* ShiftsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2349FD88261E4F9900A1FEAA /* ShiftsView.swift */; };
 		E911985A28CF572700F2101C /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E911985928CF572700F2101C /* Shift.swift */; };
+		E911985C28D1F8D600F2101C /* ShiftSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E911985B28D1F8D600F2101C /* ShiftSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		2349FD79261E4F6A00A1FEAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2349FD88261E4F9900A1FEAA /* ShiftsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftsView.swift; sourceTree = "<group>"; };
 		E911985928CF572700F2101C /* Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shift.swift; sourceTree = "<group>"; };
+		E911985B28D1F8D600F2101C /* ShiftSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				2349FD5A261E4F6900A1FEAA /* CodingChallengeApp.swift */,
 				2349FD88261E4F9900A1FEAA /* ShiftsView.swift */,
+				E911985B28D1F8D600F2101C /* ShiftSheetView.swift */,
 				2349FD5E261E4F6A00A1FEAA /* Assets.xcassets */,
 				E911985928CF572700F2101C /* Shift.swift */,
 				2349FD63261E4F6A00A1FEAA /* Info.plist */,
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2349FD89261E4F9900A1FEAA /* ShiftsView.swift in Sources */,
+				E911985C28D1F8D600F2101C /* ShiftSheetView.swift in Sources */,
 				E911985A28CF572700F2101C /* Shift.swift in Sources */,
 				2349FD5B261E4F6900A1FEAA /* CodingChallengeApp.swift in Sources */,
 			);
@@ -423,7 +427,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CodingChallenge/Preview Content\"";
-				DEVELOPMENT_TEAM = 7HRU3V63R2;
+				DEVELOPMENT_TEAM = E2J93C4MD8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CodingChallenge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -445,7 +449,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"CodingChallenge/Preview Content\"";
-				DEVELOPMENT_TEAM = 7HRU3V63R2;
+				DEVELOPMENT_TEAM = E2J93C4MD8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = CodingChallenge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
