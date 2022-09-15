@@ -18,8 +18,8 @@ struct DayShift: Codable, Identifiable{
     print("Date: \(date)")
     print("Formatted date \(formatter.date(from:date)!.description)")
     return formatter.date(from: date)
-
   }
+  
   var shifts: [Shift]
 }
 
@@ -64,6 +64,7 @@ struct Shift: Codable, Identifiable {
 }
 
 struct FacilityType: Codable {
+
   var id: UInt
   var name: String
   var color: String
