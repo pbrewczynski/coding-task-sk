@@ -19,7 +19,7 @@ struct DayShift: Codable, Identifiable{
     print("Formatted date \(formatter.date(from:date)!.description)")
     return formatter.date(from: date)
   }
-  
+
   var shifts: [Shift]
 }
 

@@ -9,7 +9,10 @@ class ShiftResultsViewModel: ObservableObject {
   @MainActor
   func executeQuery(fromDate: Date, amountOfDays: UInt) async {
     isLoadingNewDay = true
-    result = await loadDataForAmountOfNew(days: amountOfDays, from: fromDate)
+
+    let response = await loadDataForAmountOfNew(days: amountOfDays, from: fromDate)
+    result.data.append(contentsOf: response.data)
+
     isLoadingNewDay = false
   }
 

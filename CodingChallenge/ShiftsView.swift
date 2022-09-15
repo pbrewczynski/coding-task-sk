@@ -35,7 +35,7 @@ struct ShiftsView: View {
             }
           }
 
-          ForEach(results) { dayShift in
+          ForEach(viewModel.result.data) { dayShift in
             Section(header: Text(dayShift.date)) {
               ForEach(dayShift.shifts) { shift in
 
@@ -58,7 +58,10 @@ struct ShiftsView: View {
                 }
               }
             }.onAppear() {
-               loadNextDayIfNeeded(dayShift: dayShift)
+//               loadNextDayIfNeeded(dayShift: dayShift)
+              Task { //
+                await loadNextDayIfNeededWithViewModel(dayShiftAppeared: dayShift)
+              }
             }
           }
         }
@@ -67,16 +70,10 @@ struct ShiftsView: View {
           ShiftSheetView(shift: $shiftForSheet)
         }
     }.onAppear() {
-//      Task {
-//        await viewModel.executeQuery(fromDate: Date(), amountOfDays: 3)
-//      }
-      print("before loadDataForAmount")
-      loadDataForAmountOf(days: 3)
-      print("after loadDataForAmount")
+      Task {
+        await viewModel.executeQuery(fromDate: Date(), amountOfDays: 7)
+      }
     }
-//    .refreshable {
-//      print("refreshed")
-//    }
   }
 
   func conctructShiftsUrlRequestFor(startDate: Date, andAmountOfDays amountOfDays: UInt) -> URL? {
@@ -109,9 +106,6 @@ struct ShiftsView: View {
     return Calendar.current.date(byAdding: .day, value: days, to: date)
   }
 
-
-
-
   func loadDataForAmountOf(days amountOfDaysToLoad: UInt, from: Date = Date()) {
 
     guard let url = conctructShiftsUrlRequestFor(startDate: from, andAmountOfDays: amountOfDaysToLoad) else {
@@ -134,6 +128,8 @@ struct ShiftsView: View {
 
   func loadNextDayIfNeeded(dayShift: DayShift) {
 
+
+
     if dayShift.id == results.last?.id {
       guard let lastDate = results.last?.dateAsDate else {
         return
@@ -145,6 +141,23 @@ struct ShiftsView: View {
       print("nextDate: \(nextDate.description)")
       loadDataForAmountOf(days: 1, from: nextDate)
     }
+  }
+
+  func loadNextDayIfNeededWithViewModel(dayShiftAppeared: DayShift) async {
+
+    if viewModel.result.data.last?.id == dayShiftAppeared.id {
+
+      guard let lastDate = viewModel.result.data.last?.dateAsDate else {
+        return
+      }
+      guard let nextDate = moveDate(lastDate, byDays: 1) else {
+        return
+      }
+
+      await viewModel.executeQuery(fromDate: nextDate, amountOfDays: 1)
+
+    }
+
   }
 }
 
