@@ -3,16 +3,16 @@
 import Foundation
 
 class ShiftResultsViewModel: ObservableObject {
+
   @Published var result = Response(data: [])
   @Published var isLoadingNewDay = false
 
   @MainActor
   func executeQuery(fromDate: Date, amountOfDays: UInt) async {
-    isLoadingNewDay = true
 
+    isLoadingNewDay = true
     let response = await loadDataForAmountOfNew(days: amountOfDays, from: fromDate)
     result.data.append(contentsOf: response.data)
-
     isLoadingNewDay = false
   }
 
@@ -21,27 +21,16 @@ class ShiftResultsViewModel: ObservableObject {
       return Response(data: [])
     }
     do {
-      let request = URLRequest(url: url)
-
-      if #available(iOS 15.0, *) {
-
-        let (data, urlResponse) = try await URLSession.shared.data(for: request)
+        let (data, urlResponse) = try await URLSession.shared.data(from: url)
         guard let httpResponse = urlResponse as? HTTPURLResponse, httpResponse.statusCode == 200 else {
           throw "Invalid response"
         }
         let response = try JSONDecoder().decode(Response.self, from: data)
         return response
-      } else {
-        print("Running on ios 14 and that's bad ")
-        // Fallback on earlier versions
-        return Response(data: [])
-      }
-
     } catch {
       return Response(data: [])
     }
   }
-
 
   func conctructShiftsUrlRequestFor(startDate: Date, andAmountOfDays amountOfDays: UInt) -> URL? {
 
@@ -72,5 +61,4 @@ class ShiftResultsViewModel: ObservableObject {
   func moveDate(_ date: Date, byDays days: Int) -> Date? {
     return Calendar.current.date(byAdding: .day, value: days, to: date)
   }
-
 }

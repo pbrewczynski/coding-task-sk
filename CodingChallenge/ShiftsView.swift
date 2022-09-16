@@ -11,11 +11,8 @@ extension String: Error {}
 
 struct ShiftsView: View {
 
-//  var shifts: [Shift] = []
-
   @StateObject var viewModel = ShiftResultsViewModel()
 
-  @State private var results = [DayShift]()
   @ObservedObject var shiftsStore: ShiftStore
 
   @State private var isShowingSheet = false
@@ -27,7 +24,7 @@ struct ShiftsView: View {
     NavigationView {
       VStack {
         List {
-          if isLoadingIndicatorShown {
+          if viewModel.isLoadingNewDay {
             HStack {
               Text("Loading shifts... ")
               ActivityIndicator(isAnimating: true)
@@ -58,8 +55,7 @@ struct ShiftsView: View {
                 }
               }
             }.onAppear() {
-//               loadNextDayIfNeeded(dayShift: dayShift)
-              Task { //
+              Task {
                 await loadNextDayIfNeededWithViewModel(dayShiftAppeared: dayShift)
               }
             }
@@ -76,88 +72,21 @@ struct ShiftsView: View {
     }
   }
 
-  func conctructShiftsUrlRequestFor(startDate: Date, andAmountOfDays amountOfDays: UInt) -> URL? {
-
-    guard let url = URL(string: "https://staging-app.shiftkey.com/api/v2/available_shifts") else {
-      return nil
-    }
-    guard let endOfWeekDate = moveDate(startDate, byDays: Int(amountOfDays-1)) else {
-      return nil
-    }
-    let iso8601formatter = ISO8601DateFormatter()
-    iso8601formatter.formatOptions = [.withFullDate]
-    let firstDateToLoad = iso8601formatter.string(from: startDate)
-    let lastDateToLoad = iso8601formatter.string(from: endOfWeekDate)
-    var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-    urlComponents?.queryItems = [
-      URLQueryItem(name: "type", value: "list"),
-      URLQueryItem(name: "adress", value: "Dallas, TX"),
-      URLQueryItem(name: "start", value: firstDateToLoad),
-      URLQueryItem(name: "end", value: lastDateToLoad)
-    ]
-    guard let urlWithGetParameters = urlComponents?.url else {
-      return nil
-    }
-    print("urlWithGetParameters: \(urlWithGetParameters)")
-    return urlWithGetParameters
-  }
-
   func moveDate(_ date: Date, byDays days: Int) -> Date? {
     return Calendar.current.date(byAdding: .day, value: days, to: date)
-  }
-
-  func loadDataForAmountOf(days amountOfDaysToLoad: UInt, from: Date = Date()) {
-
-    guard let url = conctructShiftsUrlRequestFor(startDate: from, andAmountOfDays: amountOfDaysToLoad) else {
-      return
-    }
-
-
-
-    DispatchQueue.global().async {
-      let data = try! Data.init(contentsOf: url)
-//    let (data, _) = try! URLSession.shared.data(from: urlWithGetParameters)
-      if let decodedResponse = try? JSONDecoder().decode(Response.self, from: data) {
-        DispatchQueue.main.async {
-          results.append(contentsOf: decodedResponse.data)
-          isLoadingIndicatorShown = false
-        }
-      }
-    }
-  }
-
-  func loadNextDayIfNeeded(dayShift: DayShift) {
-
-
-
-    if dayShift.id == results.last?.id {
-      guard let lastDate = results.last?.dateAsDate else {
-        return
-      }
-      guard let nextDate = moveDate(lastDate, byDays: 1) else {
-        return
-      }
-      print("lastDate: \(lastDate.description)")
-      print("nextDate: \(nextDate.description)")
-      loadDataForAmountOf(days: 1, from: nextDate)
-    }
   }
 
   func loadNextDayIfNeededWithViewModel(dayShiftAppeared: DayShift) async {
 
     if viewModel.result.data.last?.id == dayShiftAppeared.id {
-
       guard let lastDate = viewModel.result.data.last?.dateAsDate else {
         return
       }
       guard let nextDate = moveDate(lastDate, byDays: 1) else {
         return
       }
-
       await viewModel.executeQuery(fromDate: nextDate, amountOfDays: 1)
-
     }
-
   }
 }
 

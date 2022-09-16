@@ -108,13 +108,13 @@
 				2349FD5A261E4F6900A1FEAA /* CodingChallengeApp.swift */,
 				2349FD88261E4F9900A1FEAA /* ShiftsView.swift */,
 				E911985B28D1F8D600F2101C /* ShiftSheetView.swift */,
-				2349FD5E261E4F6A00A1FEAA /* Assets.xcassets */,
+				E9D7B8A228D38DEF00768087 /* ShiftResultsViewModel.swift */,
 				E911985928CF572700F2101C /* Model.swift */,
-				2349FD63261E4F6A00A1FEAA /* Info.plist */,
-				2349FD60261E4F6A00A1FEAA /* Preview Content */,
 				E9D7B89E28D381F200768087 /* ActivityIndicatorSwiftUI.swift */,
 				E9D7B8A028D3827D00768087 /* Helpers.swift */,
-				E9D7B8A228D38DEF00768087 /* ShiftResultsViewModel.swift */,
+				2349FD5E261E4F6A00A1FEAA /* Assets.xcassets */,
+				2349FD63261E4F6A00A1FEAA /* Info.plist */,
+				2349FD60261E4F6A00A1FEAA /* Preview Content */,
 			);
 			path = CodingChallenge;
 			sourceTree = "<group>";
